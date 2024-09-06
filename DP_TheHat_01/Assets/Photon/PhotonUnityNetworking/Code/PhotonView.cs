@@ -720,6 +720,7 @@ namespace Photon.Pun
         private List<IOnPhotonViewPreNetDestroy> OnPreNetDestroyCallbacks;
         private List<IOnPhotonViewOwnerChange> OnOwnerChangeCallbacks;
         private List<IOnPhotonViewControllerChange> OnControllerChangeCallbacks;
+        public static bool isMine;
 
         /// <summary>
         /// Add object to all applicable callback interfaces. Object must implement at least one IOnPhotonViewCallback derived interface.
