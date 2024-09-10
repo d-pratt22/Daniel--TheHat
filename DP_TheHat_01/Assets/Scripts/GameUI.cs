@@ -7,15 +7,8 @@ using Photon.Pun;
 
 public class GameUI : MonoBehaviour
 {
-    [System.Serializable]
-    public class PlayerUIContainer
-    {
-        public GameObject obj;
-        public TextMeshProUGUI nameText;
-        public Slider hatTimeSlider;
-    }
 
-    public PlayerController[] playerContainers;
+    public PlayerUIContainer[] playerContainers;
     public TextMeshProUGUI winText;
 
     public static GameUI instance;
@@ -47,7 +40,7 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    void Update ()
+    private void Update ()
     {
         UpdatePlayerUI();
     }
@@ -57,7 +50,9 @@ public class GameUI : MonoBehaviour
         for (int x= 0; x<GameManager.instance.players.Length;  ++x)
         {
             if (GameManager.instance.players != null)
-                playerContainers[x].hatTimeSlider.value = GameManager.instance.players.curHatTime;
+            {
+               playerContainers[x].hatTimeSlider.value = GameManager.instance.players[x].curHatTime;
+            }
         }
     }
 
@@ -65,5 +60,13 @@ public class GameUI : MonoBehaviour
     {
         winText.gameObject.SetActive(true);
         winText.text = winnerName + " wins";
+    }
+
+    [System.Serializable]
+    public class PlayerUIContainer
+    {
+        public GameObject obj;
+        public TextMeshProUGUI nameText;
+        public Slider hatTimeSlider;
     }
 }

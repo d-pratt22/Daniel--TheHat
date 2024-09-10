@@ -4,33 +4,39 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
-using System;
 
-public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
+
+public class GameManager : MonoBehaviourPunCallbacks
 {
     [Header("Stats")]
     public bool gameEnded = false;
     public float timeToWIn;
     public float invincibleDuration;
-    private FlagsAttribute hatPickupTime;
+    private float hatPickupTime;
 
     [Header("Players")]
     public string playerPrefabLocation;
     public Transform[] spawnPoints;
+    public PlayerController[] players;
     public int playerWithHat;
     public int playersInGame;
 
     public static GameManager instance;
-    internal object player;
-    internal object players;
+   
 
     void Awake()
     {
         instance = this;
     }
 
+    private void Start()
+    {
+        players = new PlayerController[PhotonNetwork.PlayerList.Length];
+        photonView.RPC("ImInGame", RpcTarget.AllBuffered);
+    }
+
     [PunRPC]
-    void ImINGame ()
+    void ImInGame ()
     {
         playersInGame++;
 
@@ -40,7 +46,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     void SpawnPlayer ()
     {
-        GameObject playerObj = PhotonNetwork.Instantiate(playerPrefabLocation, spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)], Quaternion.identity);
+        GameObject playerObj = PhotonNetwork.Instantiate(playerPrefabLocation, spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity, 0);
 
         PlayerController playerScript = playerObj.GetComponent<PlayerController>();
 
@@ -49,7 +55,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public PlayerController GetPlayer(int playerID)
     {
-        return players.First(x => x.gameObject == playerObject);
+        return players.First(x => x.id == playerID);
 
     }
 
@@ -67,7 +73,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
         playerWithHat = playerID;
         GetPlayer(playerID).SetHat(true);
-        hatPickupTime = Time.time;
+        hatPickupTime += Time.deltaTime;
     }
 
     public bool CanGetHat ()
@@ -95,16 +101,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         NetworkManager.instance.ChangeScene("Menu");
     }
 
-    public void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info)
-    {
-        if(stream.IsWriting)
-        {
-            stream.SendNext(curHatTime);
-        }
-        else if (stream.IsReading)
-        {
-            curhatTime = (float)stream.ReceiveNext();
-        }
-    }
+   
 }
 

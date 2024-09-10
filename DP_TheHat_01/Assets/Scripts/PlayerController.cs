@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEditor;
 
-public class PlayerController : MonoBehaviour
+
+public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
     [HideInInspector]
     public int id;
@@ -21,9 +21,21 @@ public class PlayerController : MonoBehaviour
     [Header("Components")]
     public Rigidbody rig;
     public Player photonPlayer;
-    internal object PhotonView;
-    internal object photonView;
-    internal object hatTimeSlider;
+
+    [PunRPC]
+    public void Initialize(Player player)
+    {
+        photonPlayer = player;
+        id = player.ActorNumber;
+
+        GameManager.instance.players[id - 1] = this;
+
+        if (!photonView.IsMine)
+            rig.isKinematic = true;
+
+        if (id == 1)
+            GameManager.instance.GiveHat(id, true);
+    }
 
     void Update ()
     {
@@ -61,21 +73,6 @@ public class PlayerController : MonoBehaviour
             rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
-    [PunRPC]
-    public void Initialize (Player player)
-    {
-        photonPlayer = player;
-        id = player.ActorNumber;
-
-        GameManager.instance.players[id - 1] = this;
-
-        if (!PhotonView.isMine)
-            rig.isKinematic = true;
-
-        if (id == 1)
-            GameManager.instance.GiveHat(id, true);
-    }
-
     public void SetHat (bool hasHat)
     {
         hatObject.SetActive(hasHat);
@@ -95,6 +92,18 @@ public class PlayerController : MonoBehaviour
                     GameManager.instance.photonView.RPC("GiveHat", RpcTarget.All, id, false);
                 }
             }
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(curHatTime);
+        }
+        else if (stream.IsReading)
+        {
+            curHatTime = (float)stream.ReceiveNext();
         }
     }
 

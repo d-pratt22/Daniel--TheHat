@@ -15,7 +15,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -44,7 +44,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected to master server");
 
-        CreateRoom("testroom");
+       
     }
 
     public override void OnCreatedRoom()
