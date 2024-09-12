@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int playersInGame;
 
     public static GameManager instance;
-   
 
     void Awake()
     {
