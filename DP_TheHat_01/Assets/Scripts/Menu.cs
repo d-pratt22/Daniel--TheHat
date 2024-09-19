@@ -58,6 +58,7 @@ public class Menu : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom ()
     {
+        Debug.Log("You should be joining a room");
         SetScreen(lobbyScreen);
 
         photonView.RPC("UpdateLobbyUI", RpcTarget.All);
