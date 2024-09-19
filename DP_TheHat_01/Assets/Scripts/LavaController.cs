@@ -17,12 +17,13 @@ public class LavaController : MonoBehaviourPunCallbacks
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        if(collision.gameObject.tag == "Player")
+        Debug.Log(collider.name);
+        if(collider.gameObject.tag == "Player")
         {
             Debug.Log("you have been destroyed??");
-            Destroy(gameObject);
+            Destroy(collider.gameObject);
             
         }
     }
