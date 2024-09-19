@@ -1517,8 +1517,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 613355726}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: OnJoinedRoom
+        m_TargetAssemblyTypeName: Photon.Pun.MonoBehaviourPunCallbacks, PhotonUnityNetworking
+        m_MethodName: OnJoinedLobby
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
