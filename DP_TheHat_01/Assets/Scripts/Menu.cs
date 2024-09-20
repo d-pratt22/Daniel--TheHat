@@ -19,7 +19,7 @@ public class Menu : MonoBehaviourPunCallbacks
     [Header("Lobby Screen")]
     public TextMeshProUGUI playerListText;
     public Button startGameButton;
-    private object player;
+
 
     void Start()
     {

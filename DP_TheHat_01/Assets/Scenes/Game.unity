@@ -5818,6 +5818,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0.5
   rig: {fileID: 472432007}
+  hatSpawn: []
+  players: []
+  Hat: {fileID: 0}
 --- !u!64 &472432006
 MeshCollider:
   m_ObjectHideFlags: 0

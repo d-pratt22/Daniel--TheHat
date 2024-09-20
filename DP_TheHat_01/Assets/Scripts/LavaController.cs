@@ -25,21 +25,23 @@ public class LavaController : MonoBehaviourPunCallbacks
 
     }
 
-    public PlayerController GetPlayer(int playerID)
+    /*public PlayerController GetPlayer(int playerID)
     {
         return players.First(x => x.id == playerID);
 
-    }
+    }*/
 
     [PunRPC]
-    private void OnTriggerEnter(Collider collider, int playerID)
+    private void OnTriggerEnter(Collider collider/*, int playerID*/)
     {
         Debug.Log(collider.name);
         if(collider.gameObject.tag == "Player")
         {
             Debug.Log("you have been destroyed??");
             Destroy(collider.gameObject);
-            GetPlayer(playerID).SetHat(true);    
+            //GetPlayer(playerID).SetHat(true);
+            
+
             /*if(Hat == isActiveAndEnabled)
             {
                 GameObject playerObj = PhotonNetwork.Instantiate(Hat, hatSpawn[Random.Range(0, hatSpawn.Length)].position, Quaternion.identity, 0);
