@@ -10,6 +10,10 @@ public class LavaController : MonoBehaviourPunCallbacks
 
    [Header("Components")]
     public Rigidbody rig;
+    public Transform[] hatSpawn;
+
+
+    public GameObject Hat;
 
     void Update()
     {
@@ -25,6 +29,10 @@ public class LavaController : MonoBehaviourPunCallbacks
             Debug.Log("you have been destroyed??");
             Destroy(collider.gameObject);
             
+            if(Hat == isActiveAndEnabled)
+            {
+                GameObject playerObj = PhotonNetwork.Instantiate(Hat, hatSpawn[Random.Range(0, hatSpawn.Length)].position, Quaternion.identity, 0);
+            }
         }
     }
 }

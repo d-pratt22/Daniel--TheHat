@@ -48,6 +48,7 @@ public class Menu : MonoBehaviourPunCallbacks
 
     public void OnJoinRoomButton (TMP_InputField roomNameInput)
     {
+        Debug.Log("Is this thing on?");
         NetworkManager.instance.JoinRoom(roomNameInput.text);
     }
 

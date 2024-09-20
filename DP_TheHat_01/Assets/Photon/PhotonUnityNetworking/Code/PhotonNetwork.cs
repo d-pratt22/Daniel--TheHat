@@ -3306,7 +3306,7 @@ namespace Photon.Pun
             }
         }
 
-        public static GameObject Instantiate(string playerPrefabLocation, Transform transform, Quaternion identity)
+        public static GameObject Instantiate(GameObject hat, string playerPrefabLocation, Transform transform, Quaternion identity)
         {
             throw new NotImplementedException();
         }
